@@ -1,0 +1,17 @@
+
+.http
+
+backend/node_modules
+backend/.env
+
+dashboard/node_modules   
+dashboard/.env   
+
+frontend/node_modules
+frontend/.env
+frontend/howtostart.txt
+
+
+
+
+
