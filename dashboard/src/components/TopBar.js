@@ -4,7 +4,7 @@ import Menu from "./Menu";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const TopBar = () => {
+const TopBar = ({username}) => {
   const [nifty , setNifty] = useState(0);
   async function getinfo() {
     try {
@@ -35,7 +35,7 @@ const TopBar = () => {
         </div>
       </div>
 
-      <Menu />
+      <Menu username={username} />
     </div>
   );
 };

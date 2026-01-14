@@ -18,6 +18,7 @@ const { UserVerification } = require("./Middlewares/UserVarification");
 const { Nifty } = require("./Middlewares/Nifty");
 const { FundModel } = require("./models/FundModel");
 const { FundUpdate } = require("./Middlewares/FundUpdate");
+const { Logout } = require("./Middlewares/Logout");
 
 const Port = process.env.Port;
 const url = process.env.Mongo_url;
@@ -162,16 +163,16 @@ app.get("/holdings/data", async (req, res) => {
         // for (const obj of modeldata) {
         try {
 
-            const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${obj.name}.BSE&outputsize=compact&apikey=5SP6V3YS00RSI2V8`);
+            const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${obj.name}.BSE&outputsize=compact&apikey=6CPO2BRIU23VIMI1`);
             let data = response.data["Time Series (Daily)"];
 
             if (!data) {
                 return;
                 // continue;
             }
-
+            
             let lastDate = Object.keys(data)[0];
-            let newamount = Number(data[lastDate]["1. open"]);
+            let newamount = Number(data[lastDate]["1. open"]);  console.log(obj.name , "------". newamount);
             obj.price = newamount;
 
             let net = ((newamount / obj.avg) * 100) - 100;
@@ -404,4 +405,5 @@ app.get("/nifty", async (req, res) => {
 app.post("/", UserVerification)
 app.post("/signup", Signup);
 app.post("/login", Login);
+app.post("/logout", Logout);  //// updated for session
 

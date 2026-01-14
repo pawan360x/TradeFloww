@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Menu = () => {
+const Menu = ({username}) => {
 
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdowOpen, setIsProfileDropdowOpen] = useState(false);
@@ -9,8 +11,26 @@ const Menu = () => {
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
   };
-  const handleProfileClick = () => {
+
+  const handleProfileClick = async () => {   //// updated for session 
     setIsProfileDropdowOpen(!isProfileDropdowOpen);
+
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_SERVER}/logout`,
+        {}, { withCredentials: true });
+
+      if (res.data.success) {
+        toast.success(res.data.message, { position: "bottom-right" });
+        setTimeout(() => {
+          window.location.replace(`${process.env.REACT_APP_FRONTEND}/login`);
+        }, 1000);
+        
+      }
+    }
+    catch (err) {
+      console.log(err);
+      toast.error("somthing wrong ", { position: "bottom-left" })
+    }
   }
 
   return (
@@ -40,8 +60,8 @@ const Menu = () => {
         <hr />
 
         <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <div className="avatar">dg</div>
+          <p className="username">{username}</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useEffect,useState} from "react";
 
-const Summary = () => {
+const Summary = ({username}) => {
 
     const [allHoldings, setAllHoldings] = useState([]);
     const [funds, setFunds] = useState({});
@@ -25,7 +25,7 @@ const Summary = () => {
   return (
     <>
       <div className="username">
-        <h6>Hi, user !</h6>
+        <h6>Hi, {username} !</h6>
         <hr className="divider" />
       </div>
 
