@@ -1,8 +1,9 @@
-const { use } = require("passport");
+
 const User = require("../models/UserModel")
-const { createSecretToken } = require("../Utils/SecretToken");
-const bcrypt = require("bcrypt");
-const crypto = require("crypto");
+const { createSecretToken } = require("../Utils/createToken");
+const bcrypt = require("bcrypt");  // for password managing
+const crypto = require("crypto");  //  for session id 
+const jwt = require("jsonwebtoken");
 
 module.exports.Signup = async (req, res, next) => {
   try {
@@ -31,8 +32,6 @@ module.exports.Signup = async (req, res, next) => {
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: true,
-      // secure: true,       
-      // sameSite: "strict", 
       maxAge: 2 *24 * 60 * 60 * 1000
     });
     res.status(201).json({
@@ -80,3 +79,26 @@ module.exports.Login = async (req, res, next) => {
     console.error(error);
   }
 }
+
+
+
+module.exports.Logout = async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return; 
+
+  try {
+    const data = jwt.verify(token, process.env.TOKEN_KEY);
+
+    await User.findByIdAndUpdate(data.id, {
+      $pull: { sessions: { sessionId: data.sessionId } }
+    });
+
+    res.clearCookie("token", { httpOnly: true });
+    return res.json({ success: true , message:"Logout successfully!" });
+  } catch (err) {
+    // console.error(err);
+    console.log(err);
+    res.clearCookie("token", { httpOnly: true });
+    return res.json({ success: false });
+  }
+};

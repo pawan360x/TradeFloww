@@ -1,11 +1,9 @@
-import React from "react";
 
-//// backend --
-
-// import { holdings } from "../data/data";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { VerticleGraph } from "./VerticleChart";
+import { getAllHoldings } from "../api/api";
+import { useContext } from "react";
+import GeneralContext from "../context/GeneralContext";
 
 export const Red = "hello red";
 
@@ -13,21 +11,24 @@ export const Red = "hello red";
 const Holdings = () => {
 
   const [allHoldings, setAllHoldings] = useState([]);
+    const {count} = useContext(GeneralContext); 
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/holdings/data`).then((res) => {
-      setAllHoldings(res.data);
-    });
-  }, []);
+    const getData = async () => {
+      const {data}= await getAllHoldings();
+      setAllHoldings(data);
+    }
+    getData(); 
+  }, [count]);
 
 
  let investment = allHoldings.reduce((sum, obj) => sum + (obj.avg*obj.qty), 0);
-//  let investment = 0;
+
  let investmentInteger = Math.floor(investment);
  let investmentDecimal = investment - investmentInteger ;
 
  let currentValue = allHoldings.reduce((sum, obj) => sum + (obj.price*obj.qty), 0);
-//  let currentValue = 0;
+ 
  let currentValueInteger = Math.floor(currentValue);
  let currentValueDecimal = (currentValue-currentValueInteger);
 

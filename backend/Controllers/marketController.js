@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-module.exports.Nifty = async () => {
+module.exports.getNifty = async (req,res) => {
     try {
-        const res = await axios.get(
+        const result = await axios.get(
             "https://www.nseindia.com/api/marketStatus",
             {
                 headers: {
@@ -13,7 +13,7 @@ module.exports.Nifty = async () => {
             }
         );
 
-        return res.data.marketState[0].last;
+        return res.json(result.data.marketState[0].last);
 
     } catch (err) {
         console.error("NSE ERROR:", err.message);

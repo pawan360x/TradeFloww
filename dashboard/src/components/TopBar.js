@@ -1,15 +1,17 @@
-import axios from "axios";
 
 import Menu from "./Menu";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getNifty } from "../api/api";
 
-const TopBar = ({username}) => {
+const TopBar = ({userInfo}) => {
+
   const [nifty , setNifty] = useState(0);
+
   async function getinfo() {
     try {
-      let response = await axios.get(`${process.env.REACT_APP_SERVER}/nifty`);
-      setNifty(response.data)
+      let {data} = await getNifty(); 
+      setNifty(data)
     }
 
     catch (err) {
@@ -22,9 +24,9 @@ const TopBar = ({username}) => {
   }, [])
   return (
     <div className="topbar-container">
-      <div className="indices-container">
+      <div className="indices-container d-none d-md-flex">
         <div className="nifty">
-          <p className="index">NIFTY 50</p>
+          <p className="index p">NIFTY 50</p>
           <p className="index-points">{nifty} </p>
           <p className="percent"></p>
         </div>
@@ -34,8 +36,7 @@ const TopBar = ({username}) => {
           <p className="percent"></p>
         </div>
       </div>
-
-      <Menu username={username} />
+      <Menu userInfo={userInfo} />
     </div>
   );
 };

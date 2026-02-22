@@ -98,12 +98,13 @@ code {
 }
 
 .table .data {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.table .data > * {
+.table .data>* {
   margin-bottom: 5%;
 }
 
@@ -207,13 +208,15 @@ code {
   color: rgb(72, 194, 55);
 }
 
-.profit{
-  
-color:  rgb(72, 194, 55);
+.profit {
+
+  color: rgb(72, 194, 55);
 }
-.loss{
+
+.loss {
   color: red;
 }
+
 .row {
   display: flex;
   align-items: center;
@@ -270,17 +273,14 @@ color:  rgb(72, 194, 55);
 .menus {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .menus ul {
+  display: flex;
+  margin: 0;
+  gap: 3vw;
   list-style-type: none;
-  text-decoration: none;
-}
-
-.menus li {
-  display: inline-block;
-  margin-right: 30px;
   text-decoration: none;
 }
 
@@ -291,7 +291,7 @@ color:  rgb(72, 194, 55);
 }
 
 .menu.selected {
-   font-weight: 500;
+  font-weight: 500;
   color: rgb(245, 104, 52);
 }
 
@@ -306,6 +306,8 @@ hr {
   justify-content: space-evenly;
   margin-left: 20px;
 }
+
+/* ------------------------profile icon -------------------------- */
 
 .profile .avatar {
   width: 30px;
@@ -329,7 +331,77 @@ hr {
   font-weight: 300;
 }
 
-/* sudo selectors */
+/* ----------------------------profile banner --------------------- */
+
+.profileLogo {
+  font-size: 3.5rem !important;
+  color: #008BFF;
+}
+
+.profile-banner {
+  position: absolute;
+  top: 4vw;
+  right: 1vw;
+  width: 16vw;
+  height: fit-content;
+  z-index: -1;
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  box-shadow: 1px 1px 5px grey;
+  background-color: white;
+  transform: scale(.9);
+  opacity: 0;
+  transform-origin: top right;
+  transition: transform 0.45s ease, opacity .3s ease;
+}
+
+.profile-banner a{
+ width: 100%;
+ text-decoration: none;
+}
+
+.profile-active {
+  transform: scale(1);
+  z-index: 10;
+  opacity: 1;
+}
+
+.profile-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 1vw;
+  margin-bottom: 0;
+  border-bottom: 1px solid grey;
+}
+
+.profile-content {
+  padding: 1rem;
+}
+
+.profile-content:hover {
+  background-color: rgb(228, 228, 228);
+  cursor: pointer;
+}
+
+@media (max-width:768px) {
+
+  .profile-banner {
+    top: 8%;
+    right: 2.5%;
+    width: 95%;
+  }
+
+
+  .profile-head {
+    padding-bottom: 1rem;
+  }
+}
+
+
+/* sudo selectors ---------------------------------------*/
 
 .menu:hover {
   color: rgb(245, 104, 52);
@@ -413,11 +485,11 @@ hr {
 }
 
 .order-table tr td:first-child p {
-    background: rgb(255, 197, 197);
-    color: rgb(233, 120, 120);
-    width: 50%;
-    text-align: center;
-    border-radius: 2px;
+  background: rgb(255, 197, 197);
+  color: rgb(233, 120, 120);
+  width: 50%;
+  text-align: center;
+  border-radius: 2px;
 }
 
 .order-table tr td:last-child {
@@ -572,7 +644,7 @@ hr {
 }
 
 .topbar-container {
-  width: 100%;
+  width: 100vw;
   height: 10vh;
   display: flex;
   align-items: center;
@@ -592,6 +664,11 @@ hr {
   justify-content: space-around;
 }
 
+.indices-container p,
+.menu-container p {
+  margin: 0;
+}
+
 .nifty {
   flex-basis: 40%;
   display: flex;
@@ -607,8 +684,8 @@ hr {
   justify-content: space-evenly;
 }
 
-.nifty > *,
-.sensex > * {
+.nifty>*,
+.sensex>* {
   margin-right: 8px;
 }
 
@@ -697,7 +774,7 @@ hr {
   align-items: center;
 }
 
-.item-info > * {
+.item-info>* {
   margin-right: 8px;
 }
 
@@ -817,7 +894,7 @@ hr {
   background-color: #f3f3f3;
 }
 
-.list li:hover > .actions {
+.list li:hover>.actions {
   display: flex;
   cursor: move;
 }
@@ -847,10 +924,27 @@ hr {
   background-color: rgb(212, 212, 212);
 }
 
-.stock-order-buy{
+.stock-order-buy {
   background-color: rgb(251, 253, 247);
 }
-.stock-order-sell{
+
+.stock-order-sell {
   background-color: rgb(255, 243, 243);
 }
 
+@media (max-width:768px) {
+
+  .content, .watchlist-container,
+  .menu-container {
+    flex-basis: 100% !important;
+  }
+
+  .menu-container {
+    height: fit-content;
+    padding: 0px 20px;
+  }
+
+  .topbar-container {
+    height: fit-content;
+  }
+}

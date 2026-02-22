@@ -1,6 +1,20 @@
 const { FundModel } = require("../models/FundModel");
 
 
+
+
+module.exports.getFundData= async (req, res) => {
+    let defaultData = new FundModel({
+        availableCash: 50000,
+        availableMargin: 50000,
+        usedMargin: 0,
+        openingBalance: 50000,
+    })
+    // await defaultData.save();
+    let fundData = await FundModel.find();
+    res.json(fundData);
+}; 
+
 module.exports.FundUpdate = async (orderData, completed) => {
 
     let fundData = await FundModel.findOne({})

@@ -1,6 +1,12 @@
-const fundSchema = require("../schemas/fundSchema");
-const {model} = require("mongoose");
+const mongoose = require("mongoose");
 
-const FundModel = new model("Fund", fundSchema );
+const fundSchema = new mongoose.Schema({
+    availableCash: { type: Number, default: 0 },
+    availableMargin: { type: Number, default: 0 },
+    usedMargin: { type: Number, default: 0 },
+    openingBalance: { type: Number, default: 0 }, // optional
+});
 
-module.exports = {FundModel};
+const FundModel = mongoose.model("Fund", fundSchema);
+
+module.exports = { FundModel };

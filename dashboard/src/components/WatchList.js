@@ -1,9 +1,8 @@
 
 
-import React, { useState, useEffect, useContext } from "react";
-// import { watchlist } from "../data/data";
-import GeneralContext from "./GeneralContext";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import GeneralContext from "../context/GeneralContext";
+
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -11,15 +10,19 @@ import Tooltip from "@mui/material/Tooltip";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { DoughnutChart } from "./DoughnutChart";
+import { getWatchlist } from "../api/api";
 
 
 const WatchList = () => {
   const [allwatchlist, setallwatchlist] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/watchlist/data`).then((res) => {
-      setallwatchlist(res.data);
-    });
+
+    const getData = async () => {
+      const { data } = await getWatchlist();
+        setallwatchlist(data);
+    }
+    getData();
   }, []);
 
   //// doughnut chart data
@@ -51,9 +54,8 @@ const WatchList = () => {
   };
   //// doughnut chart data/
 
-
   return (
-    <div className="watchlist-container">
+    <>
       <div className="search-container">
         <input
           type="text"
@@ -68,13 +70,13 @@ const WatchList = () => {
         {allwatchlist.map((stock, index) => {
           return (
             <>
-              <WatchlistItem stock={stock}/>
+              <WatchlistItem stock={stock} />
             </>
           )
         })}
       </ul>
       <DoughnutChart data={data} />
-    </div>
+    </>
 
   );
 };
@@ -109,14 +111,14 @@ const WatchlistItem = ({ stock }) => {
 };
 
 
-const WatchListAction = ({ name,price}) => {
+const WatchListAction = ({ name, price }) => {
 
   const generalContext = useContext(GeneralContext); //// buy button window
   const handleBuyClick = () => {  //// buy button window
-    generalContext.openBuyWindow(name,price);
+    generalContext.openBuyWindow(name, price);
   };
   const handleSellClick = () => {  //// 
-    generalContext.openSellWindow(name,price);
+    generalContext.openSellWindow(name, price);
   };
 
   return (

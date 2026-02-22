@@ -1,31 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import  axios  from "axios";
+import axios from "axios";
+import { getFunds } from "../api/api";
+import { useContext } from "react";
+import GeneralContext from "../context/GeneralContext";
 
 const Funds = () => {
   const [funds, setFunds] = useState({});
-   
+  const { count } = useContext(GeneralContext);
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/fund/data`).then((res) => {
-      setFunds(res.data[0]);
-    });
-  }, []);
+    const getData = async () => {
+      const { data } = await getFunds();
+      setFunds(data[0]);
+    }
+    getData();
+  }, [count]);
 
 
 
   return (
     <>
-      <div className="funds">
+      <div className="funds d-flex flex-column justify-content-center justify-content-md-end flex-md-row ">
         <p>Instant, zero-cost fund transfers with UPI </p>
         <Link className="btn btn-green">Add funds</Link>
         <Link className="btn btn-blue">Withdraw</Link>
       </div>
 
       <div className="row">
-        <div className="col">
+        <div className="col-12 col-md-6">
           <span>
-            <p>Equity</p>
+            <h3>Equity</h3>
           </span>
 
           <div className="table">

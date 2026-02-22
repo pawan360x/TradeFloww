@@ -2,16 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { getOrders } from "../api/api";
+import { useContext } from "react";
+import GeneralContext from "../context/GeneralContext";
 
 const Orders = () => {
 
   const [alloOrders, setOrders] = useState([]);
-
+  const {count} = useContext(GeneralContext); 
+  
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/orders/data`).then((res) => {
-      setOrders(res.data);
-    });
-  }, []);
+     const getData = async () => {
+      const { data } = await getOrders();
+      setOrders(data);
+    }
+    getData();
+  }, [count]);
+
 
 
   return ( 
