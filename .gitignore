@@ -7,6 +7,7 @@ backend/.env
 dashboard/node_modules   
 dashboard/.env   
 dashboard/src/data
+dashboard/.DS_Store
 
 landing page/node_modules
 landing page/.env
