@@ -6,10 +6,12 @@ backend/.env
 
 dashboard/node_modules   
 dashboard/.env   
+dashboard/src/data
 
-frontend/node_modules
-frontend/.env
-frontend/howtostart.txt
+landing page/node_modules
+landing page/.env
+landing page/howtostart.txt
+landing page/.gitignore
 
 
 
